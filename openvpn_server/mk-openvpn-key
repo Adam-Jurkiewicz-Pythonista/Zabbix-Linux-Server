@@ -1,0 +1,69 @@
+#!/bin/bash
+#
+# script for creating client's certificates
+#
+
+# some variables - change it to your needs
+#
+VPN_DIR=/etc/openvpn/server/
+VPN_NET=172.30.0.
+DT=`date +%F`
+#
+###################################
+
+cd ${VPN_DIR}
+source ./vars
+
+
+if [ -z $1 ] 
+then
+    echo " Client's config for ${VPN_NET} - directory: ${VPN_DIR}"
+    echo "... /etc/hosts ..................."
+    cat /etc/hosts | grep ${VPN_NET}
+    echo "----------------------------------"
+    echo -n "Provide name for your client's server (vpn_server_name): "
+    read CLIENT_KEY
+else
+    CLIENT_KEY="${1}"
+    echo "OK, i will create: ${CLIENT_KEY}. [ENTER]"
+fi
+
+##
+CLIENT_CONFIG_FILE="${CLIENT_KEY}.conf"
+#
+echo "----------------------------------"
+echo "CLIENT_KEY: ${CLIENT_KEY} ..."
+echo "CLIENT_CONFIG_FILE : ${CLIENT_CONFIG_FILE}"
+echo "Press ENTER..."
+read
+
+cd ${VPN_DIR}
+./build-key ${CLIENT_KEY}
+cd ${VPN_DIR}/tmp
+cp -a ../keys/${CLIENT_KEY}.crt .
+cp -a ../keys/${CLIENT_KEY}.key .
+#
+cp -a ../client/* .
+mv client.conf ${CLIENT_CONFIG_FILE}
+echo "#####[ CLIENT_KEYe klienta 2023 VPN - ${DT} ]####" >> ${CLIENT_CONFIG_FILE}
+echo "cert ${CLIENT_KEY}.crt" >> ${CLIENT_CONFIG_FILE}
+echo "key ${CLIENT_KEY}.key" >> ${CLIENT_CONFIG_FILE}
+echo "#########################" >> ${CLIENT_CONFIG_FILE}
+chown root.root ${CLIENT_CONFIG_FILE}
+cd ../to-clients
+tar czvf ${CLIENT_KEY}-pack.tgz ../tmp/* 
+cd ${VPN_DIR}/tmp
+rm *
+cd ${VPN_DIR}/ccd
+
+cp -a 00_template ${CLIENT_KEY}
+echo "-- teraz przytdziel IP i wpisz je odpowiednio w ccd i hosts - pamietaj o kolejnosci X Y (Enter <-/ )"
+read kk
+echo "${CLIENT_KEY}" >> 00_ip.txt
+mcedit 00_ip.txt
+mcedit ${CLIENT_KEY}
+echo "${VPN_NET} ${CLIENT_KEY}" >> /etc/hosts
+mcedit /etc/hosts
+cd ${VPN_DIR}/to-clients
+exit 0
+

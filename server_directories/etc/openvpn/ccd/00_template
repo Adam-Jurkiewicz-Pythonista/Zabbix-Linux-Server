@@ -1,0 +1,5 @@
+#
+# [  5,  6] - vpn_adam_laptop Adam (reserved)
+# 5 - X (/etc/hosts), 6 - Y
+#
+ifconfig-push 172.1.0.X 172.1.0.Y
