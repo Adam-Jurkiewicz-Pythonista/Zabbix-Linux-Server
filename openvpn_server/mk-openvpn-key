@@ -45,7 +45,7 @@ cp -a ../keys/${CLIENT_KEY}.key .
 #
 cp -a ../client/* .
 mv client.conf ${CLIENT_CONFIG_FILE}
-echo "#####[ CLIENT_KEYe klienta 2023 VPN - ${DT} ]####" >> ${CLIENT_CONFIG_FILE}
+echo "#####[ 2023 VPN - ${DT} ]####" >> ${CLIENT_CONFIG_FILE}
 echo "cert ${CLIENT_KEY}.crt" >> ${CLIENT_CONFIG_FILE}
 echo "key ${CLIENT_KEY}.key" >> ${CLIENT_CONFIG_FILE}
 echo "#########################" >> ${CLIENT_CONFIG_FILE}
@@ -57,7 +57,7 @@ rm *
 cd ${VPN_DIR}/ccd
 
 cp -a 00_template ${CLIENT_KEY}
-echo "-- teraz przytdziel IP i wpisz je odpowiednio w ccd i hosts - pamietaj o kolejnosci X Y (Enter <-/ )"
+echo "-- now set up IP - write in ccd file - X Y (Enter <-/ )"
 read kk
 echo "${CLIENT_KEY}" >> 00_ip.txt
 mcedit 00_ip.txt
