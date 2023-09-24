@@ -22,3 +22,13 @@ echo "Sample password: ${PASS} "
 mysql -uroot -p
 #
 zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix
+#
+cat << SQLEND
+In MySQL, copy and paste.....
+
+mysql> set global log_bin_trust_function_creators = 0
+mysql> quit;
+-----------
+SQLEND
+#
+mysql -uroot -p
