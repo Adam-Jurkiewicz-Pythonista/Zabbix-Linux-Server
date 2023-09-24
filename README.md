@@ -21,5 +21,4 @@ https://blog.jurkiewicz.tech/zabbix-monitoring-server-also-ansible-command-cente
 
 ---
 
-## Initial config:
 
