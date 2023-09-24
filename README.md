@@ -1,6 +1,6 @@
 # Zabbix-Linux-Server
-# How to install and configure my 
-# **linux-admin.jurkiewicz.tech**
+
+## How to install and configure my  **linux-admin.jurkiewicz.tech**
 
 
 
